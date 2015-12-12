@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<f:view contentType="text/html" />
+<head>
+<title>Insert title here</title>
+
+</head>
+<h:body>
+	<h:form>
+		<h:messages></h:messages>
+		<h:panelGrid columns="2">
+		
+
+			<h:outputLabel value="Nome:" />
+			<h:inputText value="#{marcaMB.marca.descricao}" size="40" />
+
+
+			<h:commandButton action="#{marcaMB.salvar}" value="Salvar Dados" />
+
+
+
+		</h:panelGrid>
+	</h:form>
+
+</h:body>
+</html>

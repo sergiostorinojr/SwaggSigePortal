@@ -1,0 +1,69 @@
+<!--<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="postgres" transaction-type="RESOURCE_LOCAL">
+		<properties>
+
+
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:postgresql://localhost:5432/sigePortal"/>
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="134625" />
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.sql_format" value="true" />
+			<property name="hibernate.connection.shutdown" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="false" />
+			
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory" />
+			<property name="hibernate.cache.use_second_level_cache" value="false" />
+			
+		</properties>
+	</persistence-unit>
+</persistence>-->
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+    <persistence-unit name="PU" transaction-type="JTA">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <non-jta-data-source>java:jboss/datasources/postgresDS</non-jta-data-source>
+        
+        <class>br.com.swaggsige.model.domain.Marca</class>
+
+        <properties>
+            <property name="hibernate.archive.autodetecion" value="class, hbm" />
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+        
+        
+        	<!--   <property name="hibernate.ejb.event.post-insert" value="org.hibernate.ejb.event.EJB3PostInsertEventListener,org.hibernate.envers.event.AuditEventListener" />
+			   <property name="hibernate.ejb.event.post-update" value="org.hibernate.ejb.event.EJB3PostUpdateEventListener,org.hibernate.envers.event.AuditEventListener" />
+			   <property name="hibernate.ejb.event.post-delete" value="org.hibernate.ejb.event.EJB3PostDeleteEventListener,org.hibernate.envers.event.AuditEventListener" />
+			   <property name="hibernate.ejb.event.pre-collection-update" value="org.hibernate.envers.event.AuditEventListener" />
+			   <property name="hibernate.ejb.event.pre-collection-remove" value="org.hibernate.envers.event.AuditEventListener" />
+			   <property name="hibernate.ejb.event.post-collection-recreate" value="org.hibernate.envers.event.AuditEventListener" />	
+        
+        
+	        	<property name="org.hibernate.envers.store_data_at_delete" value="false"/>
+	        	<property name="org.hibernate.envers.default_schema" value="sigePortal"/>
+	        	<property name="org.hibernate.envers.audit_strategy" value="org.hibernate.envers.strategy.DefaultAuditStrategy"/>
+	       		<property name="org.hibernate.envers.audit_strategy_validity_end_rev_field_name" value="AUDIT_REVISION_END"/>
+	       		<property name="org.hibernate.envers.audit_strategy_validity_store_revend_timestamp" value="true"/>
+	       		<property name="org.hibernate.envers.audit_strategy_validity_revend_timestamp_field_name" value="REVEND_TSTMP"/>
+	       		<property name="org.hibernate.envers.versionsTableSuffix" value="_V" />
+	   			<property name="org.hibernate.envers.revisionFieldName" value="ver_rev" />-->
+       
+        </properties>
+    </persistence-unit>
+
+
+</persistence>

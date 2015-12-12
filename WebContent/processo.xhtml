@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Insert title here</title>
+
+</h:head>
+<h:body>
+	<h:form>
+		<p:growl id="growl" showDetail="true" sticky="true" />
+		<p:messages id="messages" showDetail="true" autoUpdate="true"
+			closable="true" />
+
+		<div align="center" style="margin: 10px">
+			<p:panelGrid columns="4">
+
+
+				<p:outputLabel value="Data Emissão:" />
+				<p:calendar size="10" />
+
+				<p:outputLabel value="Data Realização:" />
+				<p:calendar size="10" />
+
+
+				<p:outputLabel value="Cliente: *campo Opcional" />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="Selecione uma Opção" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Vendedor/Representante:" />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="Selecione uma Opção" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Situação" />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="Selecione uma Opção" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Tipo do Processo" />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="Selecione uma Opção" />
+				</p:selectOneMenu>
+
+
+			</p:panelGrid>
+		</div>
+
+		<div align="center" style="margin: 10px">
+
+			<p:tabView style="width:920px; height:auto;">
+				<p:tab title="Produtos">
+					<h:panelGrid columns="8" cellpadding="5">
+						<h:outputText value="Código:" />
+						<p:inputText size="5" />
+
+						<h:outputText value="Descrição:" />
+						<p:inputText size="20" />
+
+						<h:outputText value="Quantidade:" />
+						<p:inputText size="5" />
+
+						<h:outputText value="Val. Unitario.:" />
+						<p:inputText size="5" />
+
+						<p:dataTable  >
+							<p:column headerText="Código">
+								<h:outputText  value="10"/>
+							</p:column>
+
+							<p:column headerText="Descrição">
+								<h:outputText value="evento" />
+							</p:column>
+
+							<p:column headerText="Quantidade">
+								<h:outputText value="1" />
+							</p:column>
+
+							<p:column headerText="Valor unitario">
+								<h:outputText value="200" />
+							</p:column>
+						</p:dataTable>
+
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="Endereço Realização">
+
+					<h:panelGrid columns="4" cellpadding="5">
+						<h:outputText value="Cep:" />
+						<p:inputText size="10" />
+
+						<h:outputText value="Logradouro:" />
+						<p:inputText size="40" />
+
+						<h:outputText value="Numero:" />
+						<p:inputText size="5" />
+
+						<h:outputText value="Complemento:" />
+						<p:inputText size="10" />
+
+						<h:outputText value="Bairro:" />
+						<p:inputText size="10" />
+
+						<h:outputText value="Cidade:" />
+						<p:inputText size="20" />
+
+						<p:outputLabel value="UF" />
+						<p:selectOneMenu>
+							<f:selectItem itemLabel="Selecione uma Opção" />
+						</p:selectOneMenu>
+
+						<h:outputText value="Pais:" />
+						<p:inputText size="10" />
+
+					</h:panelGrid>
+
+				</p:tab>
+				<p:tab title="Foto Evento">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+						<h:outputLabel />
+						<h:outputText value="Observação:" />
+						<p:inputTextarea cols="80" rows="5" />
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+
+		</div>
+	</h:form>
+
+</h:body>
+</html>
