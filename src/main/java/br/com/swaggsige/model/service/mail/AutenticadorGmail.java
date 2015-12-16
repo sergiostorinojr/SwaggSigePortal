@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 /**
  * 
  * SwaggSigePortal
- * @author Sérgio Junior - sergio.storinojr@gmail.com
+ * @author SÃ©rgio Junior - sergio.storinojr@gmail.com
  * 
  */
 @Stateless
@@ -15,7 +15,7 @@ public class AutenticadorGmail implements Serializable{
 
 	private static EmailTextServiceUtil emailService;
 	private final static String EMAIL_AUTENTICACAO = "swaggsige@gmail.com";
-	private final static String SENHA_AUTENTICACAO = "19983057416";
+	private final static String SENHA_AUTENTICACAO = "";
 	private final static String SERVIDOR_SMTP = "smtp.gmail.com";
 	private final static String PORTA_SMTP = "465";
 	private final static boolean SSL = true;
