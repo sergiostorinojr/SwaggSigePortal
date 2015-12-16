@@ -27,7 +27,7 @@ import br.com.swaggsige.ulti.jpa.Interface.ClienteRepositoryRemote;
 /**
  * 
  * SwaggSigePortal
- * @author SÈrgio Junior - sergio.storinojr@gmail.com
+ * @author S√©rgio Junior - sergio.storinojr@gmail.com
  * 
  */
 @Stateless
@@ -55,7 +55,7 @@ public class ClienteRepository implements ClienteRepositoryLocal,
 				
 				//Cliente cliente = em.createQuery(cquery).getSingleResult();
 				List<Cliente> resultList = em.createQuery(cquery).getResultList();
-				log.info("Lista de Marca gerada com sucesso!!!");
+				log.info("Lista de Cliente gerada com sucesso!!!");
 				return resultList;
 
 				/*Query query = this.em.createQuery(" FROM  ", Cliente.class);
@@ -65,13 +65,13 @@ public class ClienteRepository implements ClienteRepositoryLocal,
 			} else {
 				log.warn("Falha ao buscar a Lista de marca no banco de dados: ");
 				FacesMessageUtil
-						.addMsgError("Falha ao buscar a lista de Marca no banco de dados\n Contate o Administrador do Sistema");
+						.addMsgError("Falha ao buscar a lista de Cliente no banco de dados\n Contate o Administrador do Sistema");
 				return null;
 			}
 		} finally {
 			if (this.em != null && this.em.isOpen()) {
 				this.em.close();
-				log.info("Conex„o getAll marca finalizada com sucesso ");
+				log.info("Conex√£o getAll marca finalizada com sucesso ");
 			}
 		}
 	}
