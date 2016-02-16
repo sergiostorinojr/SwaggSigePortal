@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.swaggsige</groupId>
 	<artifactId>SwaggSigePortal</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<!-- CONFIGURAR VERSÃO DO JAVA PARA 1.7 -->
+	<!-- CONFIGURAR VERSÃO DO JAVA PARA 1.8 -->
 	<build>
 		<plugins>
 			<plugin>
@@ -13,8 +13,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -30,6 +30,11 @@
 
 	</repositories>
 	<dependencies>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
+		</dependency>
 
 		<!-- Commons Log -->
 		<dependency>
@@ -45,7 +50,7 @@
 			<version>1.2.17</version>
 		</dependency>
 
-		<!-- EJB 3.2 -->
+		<!-- EJB 3.1 -->
 		<dependency>
 			<groupId>javax.ejb</groupId>
 			<artifactId>javax.ejb-api</artifactId>
@@ -72,13 +77,11 @@
 			<artifactId>resteasy-jaxrs</artifactId>
 			<version>3.0.11.Final</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>jaxrs-api</artifactId>
 			<version>3.0.11.Final</version>
 		</dependency>
-
 
 		<!-- Hibernate Validator ("Bean Validator") -->
 		<dependency>
@@ -110,15 +113,14 @@
 
 		<!-- JSF -->
 		<dependency>
-			<groupId>javax.faces</groupId>
-			<artifactId>javax.faces-api</artifactId>
-			<version>2.1</version>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.1.1-b04</version>
 		</dependency>
-
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>2.1.1-b04</version>
 		</dependency>
 
 
@@ -150,6 +152,12 @@
 			<version>1.0.10</version>
 		</dependency>
 
+		<!-- Json4j -->
+		<dependency>
+			<groupId>org.apache.wink</groupId>
+			<artifactId>wink-json4j</artifactId>
+			<version>1.4</version>
+		</dependency>
 
 
 

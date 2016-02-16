@@ -2,9 +2,18 @@ package br.com.swaggsige.model.domain;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlEnum;
-
-@XmlEnum
+/**
+ * 
+ *  SigePortal
+ *	@Author: Sérgio D. Storino Junior
+ *  @Email: sergio.storinojr@gmail.com
+ *  @WebSite: www.sergiostorino.com.br
+ *  @Github: github@sergiostorino.com.br
+ *  @2016
+ *  @20:29:15
+ *
+ *
+ */
 public enum UF implements Serializable{
 
 	 AC("Acre"),

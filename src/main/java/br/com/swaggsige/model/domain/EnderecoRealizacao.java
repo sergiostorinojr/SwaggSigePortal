@@ -8,9 +8,20 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * 
+ * SwaggSigePortal
+ *
+ * @Author: Sérgio D. Storino Junior
+ * @Email: sergio.storinojr@gmail.com
+ * @WebSite: www.sergiostorino.com.br
+ * @Github: github@sergiostorino.com.br
+ *
+ *
+ */
 @XmlRootElement
 @Entity
-@Table(name="enderecoRealizacao", indexes = {
+@Table(name = "enderecoRealizacao", indexes = {
 		@Index(name = "IDX_ENDERECOREALIZACAO_CEP", columnList = "cep"),
 		@Index(name = "IDX_ENDERECOREALIZACAO_LOGRADOURO", columnList = "logradouro"),
 		@Index(name = "IDX_ENDERECOREALIZACAO_BAIRRO", columnList = "bairro"),
@@ -18,9 +29,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 		@Index(name = "IDX_ENDERECOREALIZACAO_PAIS", columnList = "pais") })
 public class EnderecoRealizacao extends Endereco {
 
+	private static final long serialVersionUID = 1L;
+
 	@OneToOne
-	@JoinColumn(name="processo_id", nullable=false ,foreignKey = @ForeignKey(name="FK_PROCESSO_ID"))
+	@JoinColumn(name = "processo_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PROCESSO_ID"))
 	private Processo processo;
+
+	public EnderecoRealizacao() {
+	}
+
+	public EnderecoRealizacao(Processo processo) {
+		this.processo = processo;
+	}
 
 	public final Processo getProcesso() {
 		return processo;
@@ -29,8 +49,5 @@ public class EnderecoRealizacao extends Endereco {
 	public void setProcesso(Processo processo) {
 		this.processo = processo;
 	}
-	
-	
-
 
 }

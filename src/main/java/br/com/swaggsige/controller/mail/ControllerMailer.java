@@ -10,12 +10,6 @@ import br.com.swaggsige.model.service.mail.MailProducer;
 import com.outjected.email.api.MailMessage;
 import com.outjected.email.impl.MailMessageImpl;
 
-/**
- * 
- * SwaggSigePortal
- * @author Sérgio Junior - sergio.storinojr@gmail.com
- * 
- */
 @Stateless
 public class ControllerMailer implements Serializable{
 	

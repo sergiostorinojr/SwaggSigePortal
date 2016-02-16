@@ -14,12 +14,6 @@ import br.com.swaggsige.model.service.jsf.util.FacesMessageUtil;
 
 import com.outjected.email.api.MailMessage;
 
-/**
- * 
- * SwaggSigePortal
- * @author Sérgio Junior - sergio.storinojr@gmail.com
- * 
- */
 @ManagedBean
 @ViewScoped
 @Stateless
@@ -33,9 +27,9 @@ public class EnvioEmailMB implements  Serializable{
 		MailMessage message;
 		try {
 			message = mailer.novaMensagem();
-			message.to("ti.thiagocamelo@gmail.com")
-			.subject("Teste Junior")
-			.bodyText("teste 1234 teste 4321")
+			message.to("guilherme@earpuncher.com")
+			.subject("Teste Sistema TCC")
+			.bodyText("Teste TCC ")
 			.send();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

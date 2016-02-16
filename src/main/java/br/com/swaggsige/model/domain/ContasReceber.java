@@ -10,35 +10,69 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * 
+ * SwaggSigePortal
+ *
+ * @Author: Sérgio D. Storino Junior
+ * @Email: sergio.storinojr@gmail.com
+ * @WebSite: www.sergiostorino.com.br
+ * @Github: github@sergiostorino.com.br
+ *
+ *
+ */
 @XmlRootElement
 @Entity
 @Table(name = "contasReceber", indexes = {
 		@Index(name = "IDX_CONTASRECEBER_NUMDOCUMENTO", columnList = "numDocumento"),
-		@Index(name = "IDX_CONTASRECEBER_DATACADASTRO", columnList = "dataCadastro"), 
-		@Index(name = "IDX_CONTASPAGAR_DATAPRORROGACAO", columnList = "dataProrrogacao"), 
-		@Index(name = "IDX_CONTASPAGAR_DATAVENCIMENTO", columnList = "dataVencimento"), 
-		@Index(name = "IDX_CONTASPAGAR_DATAEMISSAO", columnList = "dataEmissao")}, 
-		uniqueConstraints = { @UniqueConstraint(name = "CONTASRECEBER_UQ", columnNames = {
-		"numDocumento"}) })
-public class ContasReceber extends AbstractEntity implements Serializable {
+		@Index(name = "IDX_CONTASRECEBER_DATACADASTRO", columnList = "dataCadastro"),
+		@Index(name = "IDX_CONTASRECEBER_DATAPRORROGACAO", columnList = "dataProrrogacao"),
+		@Index(name = "IDX_CONTASRECEBER_DATAVENCIMENTO", columnList = "dataVencimento"),
+		@Index(name = "IDX_CONTASRECEBER_DATAEMISSAO", columnList = "dataEmissao") }, uniqueConstraints = { @UniqueConstraint(name = "CONTASRECEBER_UQ", columnNames = { "numDocumento" }) })
+@NamedQueries({
+		@NamedQuery(name = "contasReceber.searchAll", query = "SELECT c FROM ContasReceber c JOIN FETCH c.cliente  JOIN FETCH c.movBancaria  JOIN FETCH c.planoContas  JOIN FETCH c.centroCusto  JOIN FETCH c.processo"),
+		@NamedQuery(name = "contasReceber.searchByNumDoc", query = "SELECT c FROM ContasReceber c JOIN FETCH c.cliente  JOIN FETCH c.movBancaria  JOIN FETCH c.planoContas  JOIN FETCH c.centroCusto  JOIN FETCH c.processo WHERE c.numDocumento = :numDocumento"),
+		@NamedQuery(name = "contasReceber.searchAllByRazaoSocialClienteStartsWith", query = "SELECT c FROM ContasReceber c JOIN FETCH c.cliente  JOIN FETCH c.movBancaria  JOIN FETCH c.planoContas  JOIN FETCH c.centroCusto  JOIN FETCH c.processo WHERE c.cliente.razaoSocial LIKE  :razaoSocial"),
+		@NamedQuery(name = "contasReceber.searchByCNPJCliente", query = "SELECT c FROM ContasReceber c JOIN FETCH c.cliente JOIN FETCH c.movBancaria  JOIN FETCH c.planoContas  JOIN FETCH c.centroCusto  JOIN FETCH c.processo WHERE c.cliente.cnpj = :cnpjFornecedor"),
+		@NamedQuery(name = "contasReceber.searchAllByPlanoContas", query = "SELECT c FROM ContasReceber c JOIN FETCH c.cliente  JOIN FETCH c.movBancaria  JOIN FETCH c.planoContas  JOIN FETCH c.centroCusto  JOIN FETCH c.processo WHERE c.planoContas.id = :IDPlanoContas"),
+		@NamedQuery(name = "contasReceber.searchAllByRegistrationDate", query = "SELECT c FROM ContasReceber c JOIN FETCH c.cliente  JOIN FETCH c.movBancaria  JOIN FETCH c.planoContas  JOIN FETCH c.centroCusto  JOIN FETCH c.processo WHERE c.dataCadastro BETWEEN :data1 AND :data2"),
+		@NamedQuery(name = "contasReceber.searchByDateExtension", query = "SELECT c FROM ContasReceber c JOIN FETCH c.cliente  JOIN FETCH c.movBancaria  JOIN FETCH c.planoContas  JOIN FETCH c.centroCusto  JOIN FETCH c.processo WHERE c.dataProrrogacao BETWEEN :data1 AND :data2"),
+		@NamedQuery(name = "contasReceber.searchByDateIssue", query = "SELECT c FROM ContasReceber c JOIN FETCH c.cliente  JOIN FETCH c.movBancaria  JOIN FETCH c.planoContas  JOIN FETCH c.centroCusto  JOIN FETCH c.processo WHERE c.dataEmissao BETWEEN :data1 AND :data2"),
+		@NamedQuery(name = "contasReceber.searchByDueDate", query = "SELECT c FROM ContasReceber c JOIN FETCH c.cliente  JOIN FETCH c.movBancaria  JOIN FETCH c.planoContas  JOIN FETCH c.centroCusto  JOIN FETCH c.processo WHERE c.dataVencimento BETWEEN :data1 AND :data2") })
+@SequenceGenerator(name = "ContasReceber_SEQ", sequenceName = "ContasReceber_SEQ", allocationSize = 1, initialValue = 1)
+public class ContasReceber implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ContasReceber_SEQ")
+	@Column(name = "id", nullable = false, insertable = false, updatable = false, columnDefinition = "serial")
+	private Long id;
 
 	@Column(name = "numDocumento", length = 20)
 	private String numDocumento;
 
 	@OneToOne
-	@JoinColumn(name = "cliente_id",foreignKey = @ForeignKey(name="FK_CLIENTE_ID"))
+	@JoinColumn(name = "cliente_id", foreignKey = @ForeignKey(name = "FK_CLIENTE_ID"))
 	private Cliente cliente;
 
 	@Enumerated(EnumType.STRING)
@@ -46,23 +80,23 @@ public class ContasReceber extends AbstractEntity implements Serializable {
 	private Status situacaoStatus;
 
 	@ManyToOne
-	@JoinColumn(name = "movBancaria_id",foreignKey = @ForeignKey(name="FK_MOVBANCARIA_ID"))
+	@JoinColumn(name = "movBancaria_id", foreignKey = @ForeignKey(name = "FK_MOVBANCARIA_ID"))
 	private MovimentacaoBancaria movBancaria;
 
 	@OneToOne
-	@JoinColumn(name = "planoContas_id",foreignKey = @ForeignKey(name="FK_PLANOCONTAS_ID"))
+	@JoinColumn(name = "planoContas_id", foreignKey = @ForeignKey(name = "FK_PLANOCONTAS_ID"))
 	private PlanoContas planoContas;
 
 	@OneToOne
-	@JoinColumn(name = "centroCusto_id",foreignKey = @ForeignKey(name="FK_CENTROCUSTO_ID"))
+	@JoinColumn(name = "centroCusto_id", foreignKey = @ForeignKey(name = "FK_CENTROCUSTO_ID"))
 	private CentroCusto centroCusto;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipoPagamento")
 	private TipoPagamento tipoPagamento;
 
-	@OneToMany(mappedBy = "contasReceber", cascade = CascadeType.ALL)
-	private List<Processo> idProcesso;
+	@OneToMany(mappedBy = "contasReceber", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Processo> processo;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dataCadastro")
@@ -110,7 +144,40 @@ public class ContasReceber extends AbstractEntity implements Serializable {
 	private String observacao;
 
 	public ContasReceber() {
-		// TODO Auto-generated constructor stub
+	}
+
+	public ContasReceber(Long id, String numDocumento, Cliente cliente,
+			Status situacaoStatus, MovimentacaoBancaria movBancaria,
+			PlanoContas planoContas, CentroCusto centroCusto,
+			TipoPagamento tipoPagamento, List<Processo> processo,
+			Date dataCadastro, Date dataEmissao, Date dataVencimento,
+			Date dataProrrogacao, Date dataRecebimento, Date competencia,
+			BigDecimal valorDocumento, BigDecimal percJuros,
+			BigDecimal percDesconto, BigDecimal valorJuros,
+			BigDecimal valorDesconto, BigDecimal valorRecebido,
+			String observacao) {
+		this.id = id;
+		this.numDocumento = numDocumento;
+		this.cliente = cliente;
+		this.situacaoStatus = situacaoStatus;
+		this.movBancaria = movBancaria;
+		this.planoContas = planoContas;
+		this.centroCusto = centroCusto;
+		this.tipoPagamento = tipoPagamento;
+		this.processo = processo;
+		this.dataCadastro = dataCadastro;
+		this.dataEmissao = dataEmissao;
+		this.dataVencimento = dataVencimento;
+		this.dataProrrogacao = dataProrrogacao;
+		this.dataRecebimento = dataRecebimento;
+		this.competencia = competencia;
+		this.valorDocumento = valorDocumento;
+		this.percJuros = percJuros;
+		this.percDesconto = percDesconto;
+		this.valorJuros = valorJuros;
+		this.valorDesconto = valorDesconto;
+		this.valorRecebido = valorRecebido;
+		this.observacao = observacao;
 	}
 
 	public final String getNumDocumento() {
@@ -142,7 +209,7 @@ public class ContasReceber extends AbstractEntity implements Serializable {
 	}
 
 	public final List<Processo> getIdProcesso() {
-		return idProcesso;
+		return processo;
 	}
 
 	public final Date getDataCadastro() {
@@ -226,7 +293,7 @@ public class ContasReceber extends AbstractEntity implements Serializable {
 	}
 
 	public void setIdProcesso(List<Processo> idProcesso) {
-		this.idProcesso = idProcesso;
+		this.processo = idProcesso;
 	}
 
 	public void setDataCadastro(Date dataCadastro) {
@@ -279,6 +346,47 @@ public class ContasReceber extends AbstractEntity implements Serializable {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public final Long getId() {
+		return id;
+	}
+
+	public final List<Processo> getProcesso() {
+		return processo;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setProcesso(List<Processo> processo) {
+		this.processo = processo;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ContasReceber other = (ContasReceber) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

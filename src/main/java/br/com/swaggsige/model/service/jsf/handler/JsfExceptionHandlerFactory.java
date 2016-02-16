@@ -7,7 +7,10 @@ import javax.faces.context.ExceptionHandlerFactory;
  * 
  * SwaggSigePortal
  * @author Sérgio Junior - sergio.storinojr@gmail.com
- * 
+ * 26/11/2015 - 15:06:38
+ *
+ * Responsável por
+ *
  */
 public class JsfExceptionHandlerFactory extends ExceptionHandlerFactory {
 

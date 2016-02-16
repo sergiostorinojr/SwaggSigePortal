@@ -8,6 +8,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * 
+ * SwaggSigePortal
+ *
+ * @Author: Sérgio D. Storino Junior
+ * @Email: sergio.storinojr@gmail.com
+ * @WebSite: www.sergiostorino.com.br
+ * @Github: github@sergiostorino.com.br
+ *
+ *
+ */
 @XmlRootElement
 @Entity
 @Table(name = "enderecoFornecedor", indexes = {
@@ -18,12 +29,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 		@Index(name = "IDX_ENDERECOFORNECEDOR_PAIS", columnList = "pais") })
 public class EnderecoFornecedor extends Endereco {
 
+	private static final long serialVersionUID = 1L;
+
 	@ManyToOne
-	@JoinColumn(name = "fornecedor_id", nullable=false ,foreignKey = @ForeignKey(name="FK_FORNECEDOR_ID"))
+	@JoinColumn(name = "fornecedor_id", nullable = false, foreignKey = @ForeignKey(name = "FK_FORNECEDOR_ID"))
 	private Fornecedor fornecedor;
-	
+
 	public EnderecoFornecedor() {
-		// TODO Auto-generated constructor stub
+	}
+
+	public EnderecoFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 	public final Fornecedor getFornecedor() {

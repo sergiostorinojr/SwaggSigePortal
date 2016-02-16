@@ -24,7 +24,10 @@ import br.com.swaggsige.model.service.jsf.util.FacesMessageUtil;
  * 
  * SwaggSigePortal
  * @author Sérgio Junior - sergio.storinojr@gmail.com
- * 
+ * 26/11/2015 - 10:53:50
+ *
+ * Responsável por Manipular Exceções lançada pelo ciclo de vida do JSF
+ *
  */
 public class JsfExceptionHandler extends ExceptionHandlerWrapper implements Serializable{
 

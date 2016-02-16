@@ -4,16 +4,14 @@ import java.util.Collection;
 
 import javax.ejb.Local;
 
-import br.com.swaggsige.model.domain.AbstractEntity;
-
 /**
  * 
- * SwaggSigePortal
- * @author Sérgio Junior - sergio.storinojr@gmail.com
- * 
+ * @author Junior
+ *
+ * @param <T>
  */
 @Local
-public interface JsonLocal<T extends AbstractEntity> {
+public interface JsonLocal<T > {
 	
 	public String toJson(T obj);
 	public String listaToJson(Collection<T> lista);

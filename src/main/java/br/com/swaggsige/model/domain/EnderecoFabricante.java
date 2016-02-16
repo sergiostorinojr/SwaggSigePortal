@@ -10,6 +10,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * 
+ * SwaggSigePortal
+ *
+ * @Author: Sérgio D. Storino Junior
+ * @Email: sergio.storinojr@gmail.com
+ * @WebSite: www.sergiostorino.com.br
+ * @Github: github@sergiostorino.com.br
+ *
+ *
+ */
 @XmlRootElement
 @Entity
 @Table(name = "enderecoFabricante", indexes = {
@@ -20,12 +31,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 		@Index(name = "IDX_ENDERECOFABRICANTE_PAIS", columnList = "pais") })
 public class EnderecoFabricante extends Endereco implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	@ManyToOne
-	@JoinColumn(name = "fabricante_id", nullable=false ,foreignKey = @ForeignKey(name="FK_FABRICANTE_ID"))
+	@JoinColumn(name = "fabricante_id", nullable = false, foreignKey = @ForeignKey(name = "FK_FABRICANTE_ID"))
 	private Fabricante fabricante;
 
 	public EnderecoFabricante() {
-		// TODO Auto-generated constructor stub
+	}
+
+	public EnderecoFabricante(Fabricante fabricante) {
+		this.fabricante = fabricante;
 	}
 
 	public final Fabricante getFabricante() {

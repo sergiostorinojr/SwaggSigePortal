@@ -2,12 +2,6 @@ package br.com.swaggsige.model.service.exception;
 
 import java.io.Serializable;
 
-/**
- * 
- * SwaggSigePortal
- * @author Sérgio Junior - sergio.storinojr@gmail.com
- * 
- */
 public enum MessageJsf implements Serializable{
 	
 	GRAVADO_COM_SUCESSO("Dados Gravados com Sucesso!!!"),

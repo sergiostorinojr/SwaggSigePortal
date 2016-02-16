@@ -15,12 +15,6 @@ import br.com.swaggsige.controller.mail.ControllerMailer;
 import com.outjected.email.api.SessionConfig;
 import com.outjected.email.impl.SimpleMailConfig;
 
-/**
- * 
- * SwaggSigePortal
- * @author Sérgio Junior - sergio.storinojr@gmail.com
- * 
- */
 @Stateless
 public class MailProducer implements Serializable{
 	

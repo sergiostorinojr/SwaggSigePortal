@@ -9,7 +9,10 @@ import javax.faces.context.FacesContext;
  * 
  * SwaggSigePortal
  * @author Sérgio Junior - sergio.storinojr@gmail.com
+ * 22/11/2015 - 03:10:53
+ *
  * 
+ *
  */
 public class FacesMessageUtil implements Serializable {
 	

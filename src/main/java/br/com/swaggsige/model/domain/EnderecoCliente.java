@@ -10,6 +10,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * 
+ * SwaggSigePortal
+ *
+ * @Author: Sérgio D. Storino Junior
+ * @Email: sergio.storinojr@gmail.com
+ * @WebSite: www.sergiostorino.com.br
+ * @Github: github@sergiostorino.com.br
+ *
+ *
+ */
 @XmlRootElement
 @Entity
 @Table(name="enderecoCliente", indexes = {
@@ -20,12 +31,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 		@Index(name = "IDX_ENDERECOCLIENTE_PAIS", columnList = "pais") })
 public class EnderecoCliente extends Endereco implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@ManyToOne
 	@JoinColumn(name="cliente_id", nullable=false,foreignKey = @ForeignKey(name="FK_CLIENTE_ID"))
 	private Cliente cliente;
 	
 	public EnderecoCliente() {
 	}
+	
+	
+	public EnderecoCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 
 	public final Cliente getCliente() {
 		return cliente;
@@ -33,6 +52,12 @@ public class EnderecoCliente extends Endereco implements Serializable{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+
+	@Override
+	public String toString() {
+		return "EnderecoCliente [cliente=" + cliente + "]";
 	}
 	
 	

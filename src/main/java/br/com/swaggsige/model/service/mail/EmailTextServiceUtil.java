@@ -18,12 +18,6 @@ import javax.mail.internet.MimeMessage;
 import br.com.swaggsige.model.service.exception.EmailException;
 import br.com.swaggsige.model.service.jsf.util.FacesMessageUtil;
 
-/**
- * 
- * SwaggSigePortal
- * @author Sérgio Junior - sergio.storinojr@gmail.com
- * 
- */
 public class EmailTextServiceUtil implements Serializable {
 
 	private String emailRemetente;
