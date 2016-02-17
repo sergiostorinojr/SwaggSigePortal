@@ -1,4 +1,4 @@
-package br.com.swaggsige.model.service.DAO;
+package br.com.swaggsige.model.service.repository;
 
 import java.util.Collection;
 
@@ -16,9 +16,8 @@ import javax.persistence.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import br.com.swaggsige.model.domain.ContasReceber;
+import br.com.swaggsige.model.domain.ContasPagar;
 import br.com.swaggsige.model.service.exception.PersistenceException;
-import br.com.swaggsige.model.service.repository.ContasPagarReceberLocalRepository;
 
 /**
  * 
@@ -37,22 +36,22 @@ import br.com.swaggsige.model.service.repository.ContasPagarReceberLocalReposito
  * @param <T>
  *
  */
-@Stateless(mappedName="ContasReceberDAO")
+@Stateless(mappedName="ContasPagarDAO")
 @LocalBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class ContasReceberDAO implements ContasPagarReceberLocalRepository<ContasReceber> {
+public class ContasPagarRepository implements ContasPagarReceberLocalRepository<ContasPagar> {
 	
 	@PersistenceContext(unitName="PU")
 	private EntityManager em;
-
-	private static Log log = LogFactory.getLog(ContasReceber.class);
+	
+	private static Log log = LogFactory.getLog(ContasPagar.class);
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<ContasReceber> getAll() throws PersistenceException {
+	public Collection<ContasPagar> getAll() throws PersistenceException {
 		try{
-			Query createNamedQuery = em.createNamedQuery("contasReceber.searchAll");
+			Query createNamedQuery = em.createNamedQuery("contasPagar.searchAll");
 			
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
@@ -66,9 +65,9 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<ContasReceber> getAllByRazaoSocialStartsWith(String razaoSocial) throws PersistenceException {
+	public Collection<ContasPagar> getAllByRazaoSocialStartsWith(String razaoSocial) throws PersistenceException {
 		try{
-			Query createNamedQuery = em.createNamedQuery("contasReceber.searchAllByRazaoSocialClienteStartsWith")
+			Query createNamedQuery = em.createNamedQuery("contasPagar.searchAllByRazaoSocialFornecedorStartsWith")
 																.setParameter("razaoSocial", razaoSocial);
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
@@ -82,9 +81,9 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<ContasReceber> getAllByPlanoContas(Long idPlanoContas) throws PersistenceException {
+	public Collection<ContasPagar> getAllByPlanoContas(Long idPlanoContas) throws PersistenceException {
 		try{
-			Query createNamedQuery = em.createNamedQuery("contasReceber.searchAllByPlanoContas")
+			Query createNamedQuery = em.createNamedQuery("contasPagar.searchAllByPlanoContas")
 															.setParameter("IDPlanoContas", idPlanoContas);
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
@@ -97,11 +96,11 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public ContasReceber getByCNPJ(String cnpj) throws PersistenceException {
+	public ContasPagar getByCNPJ(String cnpj) throws PersistenceException {
 		try{
-			Query createNamedQuery = em.createNamedQuery("contasReceber.searchByCNPJCliente")
-															.setParameter("cnpjCliente", cnpj);
-			return (ContasReceber) createNamedQuery.getSingleResult();
+			Query createNamedQuery = em.createNamedQuery("contasPagar.searchByCNPJFornecedor")
+															.setParameter("cnpjFornecedor", cnpj);
+			return (ContasPagar) createNamedQuery.getSingleResult();
 		}catch(NoResultException e){
 			
 			log.warn("Nennhum Resultado foi encontrado  " + e.getMessage());
@@ -112,11 +111,11 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public ContasReceber getByNumDoc(String numDoc) throws PersistenceException {
+	public ContasPagar getByNumDoc(String numDoc) throws PersistenceException {
 		try{
-			Query createNamedQuery = em.createNamedQuery("contasReceber.searchByNumDoc")
+			Query createNamedQuery = em.createNamedQuery("contasPagar.searchByNumDoc")
 																.setParameter("numDocumento", numDoc);
-			return (ContasReceber) createNamedQuery.getSingleResult();
+			return (ContasPagar) createNamedQuery.getSingleResult();
 		}catch(NoResultException e){
 			
 			log.warn("Nennhum Resultado foi encontrado  " + e.getMessage());
@@ -128,9 +127,9 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<ContasReceber> getAllByRegistrationDate(String data1,String data2) throws PersistenceException {
+	public Collection<ContasPagar> getAllByRegistrationDate(String data1,String data2) throws PersistenceException {
 		try{
-			Query createNamedQuery = em.createNamedQuery("contasReceber.searchAllByRegistrationDate")
+			Query createNamedQuery = em.createNamedQuery("contasPagar.searchAllByRegistrationDate")
 																			.setParameter("data1", data1)
 																			.setParameter("data2", data2);
 			return createNamedQuery.getResultList();
@@ -145,9 +144,9 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<ContasReceber> getByDateExtension(String data1, String data2) throws PersistenceException {
+	public Collection<ContasPagar> getByDateExtension(String data1, String data2) throws PersistenceException {
 		try{
-			Query createNamedQuery = em.createNamedQuery("contasReceber.searchByDateExtension")
+			Query createNamedQuery = em.createNamedQuery("contasPagar.searchByDateExtension")
 																	.setParameter("data1", data1)
 																	.setParameter("data2", data2);
 		return createNamedQuery.getResultList();
@@ -162,9 +161,9 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<ContasReceber> getByDateIssue(String data1, String data2) throws PersistenceException {
+	public Collection<ContasPagar> getByDateIssue(String data1, String data2) throws PersistenceException {
 		try{
-			Query createNamedQuery = em.createNamedQuery("contasReceber.searchByDateIssue")
+			Query createNamedQuery = em.createNamedQuery("contasPagar.searchByDateIssue")
 																.setParameter("data1", data1)
 																.setParameter("data2", data2);
 
@@ -180,9 +179,9 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<ContasReceber> getByDueDate(String data1, String data2) throws PersistenceException {
+	public Collection<ContasPagar> getByDueDate(String data1, String data2) throws PersistenceException {
 		try{
-			Query createNamedQuery = em.createNamedQuery("contasReceber.searchByDueDate")
+			Query createNamedQuery = em.createNamedQuery("contasPagar.searchByDueDate")
 															.setParameter("data1", data1)
 															.setParameter("data2", data2);
 
@@ -197,16 +196,16 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public ContasReceber getById(Long id) throws PersistenceException{
-		return em.find(ContasReceber.class, id);
+	public ContasPagar getById(Long id) throws PersistenceException{
+		return em.find(ContasPagar.class, id);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void save(ContasReceber contasReceber) throws PersistenceException {
+	public void save(ContasPagar contasPagar) throws PersistenceException {
 		try {
 			
-			em.persist(contasReceber);
+			em.persist(contasPagar);
 		} catch (Exception e) {
 
 			log.warn("Falha ao Gravar novo Cadastro "+ e.getMessage());
@@ -217,9 +216,9 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public ContasReceber update(ContasReceber contasReceber) throws PersistenceException {
+	public ContasPagar update(ContasPagar contasPagar) throws PersistenceException {
 		try {
-			ContasReceber contas = em.merge(contasReceber);
+			ContasPagar contas = em.merge(contasPagar);
 	
 			return contas;
 		} catch (Exception e) {
@@ -232,9 +231,9 @@ public class ContasReceberDAO implements ContasPagarReceberLocalRepository<Conta
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void toRemove(ContasReceber contasReceber) throws PersistenceException {
+	public void toRemove(ContasPagar contasPagar) throws PersistenceException {
 		try {
-			ContasReceber contas = (ContasReceber) em.find(ContasReceber.class, contasReceber.getId());
+			ContasPagar contas = (ContasPagar) em.find(ContasPagar.class, contasPagar.getId());
 			if (contas != null) {
 				em.remove(contas);
 			}

@@ -1,4 +1,4 @@
-package br.com.swaggsige.model.service.DAO;
+package br.com.swaggsige.model.service.repository;
 
 import java.util.Collection;
 import java.util.Date;
@@ -21,8 +21,6 @@ import org.apache.commons.logging.LogFactory;
 import br.com.swaggsige.model.domain.Cliente;
 import br.com.swaggsige.model.domain.TipoPessoa;
 import br.com.swaggsige.model.service.exception.PersistenceException;
-import br.com.swaggsige.model.service.repository.ClienteLocalRepository;
-import br.com.swaggsige.model.service.repository.PessoaLocalRepository;
 
 /**
  * 
@@ -38,12 +36,12 @@ import br.com.swaggsige.model.service.repository.PessoaLocalRepository;
 @Stateless(mappedName="ClienteDAO")
 @LocalBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class ClienteDAO implements ClienteLocalRepository {
+public class ClienteRepository implements ClienteLocalRepository {
 
 	@PersistenceContext(unitName="PU")
 	private EntityManager em;
 
-	private static Log log = LogFactory.getLog(ClienteDAO.class);
+	private static Log log = LogFactory.getLog(ClienteRepository.class);
 
 	@SuppressWarnings("unchecked")
 	@Override

@@ -1,4 +1,4 @@
-package br.com.swaggsige.model.service.DAO;
+package br.com.swaggsige.model.service.repository;
 
 import java.util.Collection;
 
@@ -16,9 +16,8 @@ import javax.persistence.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import br.com.swaggsige.model.domain.Cargo;
+import br.com.swaggsige.model.domain.CentroCusto;
 import br.com.swaggsige.model.service.exception.PersistenceException;
-import br.com.swaggsige.model.service.repository.BaseLocalRepository;
 
 /**
  * 
@@ -37,22 +36,25 @@ import br.com.swaggsige.model.service.repository.BaseLocalRepository;
  * @param <T>
  *
  */
-@Stateless(mappedName = "CargoDAO")
 @LocalBean
+@Stateless(mappedName = "CentroCustoDAO")
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class CargoDAO implements BaseLocalRepository<Cargo> {
+public class CentroCustoRepository implements CentroCustoLocalRepository {
 
 	@PersistenceContext(unitName = "PU")
 	private EntityManager em;
 	
-	private static Log log = LogFactory.getLog(CargoDAO.class);
+	private static Log log = LogFactory.getLog(CentroCustoRepository.class);
+
+	public CentroCustoRepository() {
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<Cargo> getAll() throws PersistenceException {
+	public Collection<CentroCusto> getAll() throws PersistenceException{
 		try{
-			Query createNamedQuery = em.createNamedQuery("cargo.getAll");
+			Query createNamedQuery = em.createNamedQuery("centroCusto.getAll");
 			
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
@@ -65,46 +67,46 @@ public class CargoDAO implements BaseLocalRepository<Cargo> {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Cargo getById(Long id) {
-		return em.find(Cargo.class, id);
+	public CentroCusto getById(Long id) {
+		return em.find(CentroCusto.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Cargo> getAllByDescriptionStartsWith(String description) throws PersistenceException {
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Collection<CentroCusto> getAllByDescriptionStartsWith(String description) throws PersistenceException{
 		try {
-			Query createNamedQuery = em.createNamedQuery("cargo.getAllByDescriptionStartsWith")
-																.setParameter("descricao", description);
+			Query createNamedQuery = em.createNamedQuery("centroCusto.getAllByDescriptionStartsWith")
+																			.setParameter("descricao", description);
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
 			
-			log.warn("Nennhum Resultado foi encontrado para Esta Descrição " + e.getMessage());
-			throw new PersistenceException("Nennhum Resultado foi encontrado para Esta Descrição ", e);
+			log.warn("Nennhum Resultado foi encontrado para Este Banco " + e.getMessage());
+			throw new PersistenceException("Nennhum Resultado foi encontrado para Este Banco ", e);
 				
 		}
 	}
-
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void save(Cargo cargo) throws PersistenceException {
-		try {
-			
-			em.persist(cargo);
-		} catch (Exception e) {
+	public void save(CentroCusto centroCusto) throws PersistenceException {
+			try {
+				
+				em.persist(centroCusto);
+			} catch (Exception e) {
 
-			log.warn("Falha ao Gravar novo Cadastro "+ e.getMessage());
-			throw new PersistenceException("Falha ao Gravar novo Cadastro ", e);
+				log.warn("Falha ao Gravar novo Cadastro "+ e.getMessage());
+				throw new PersistenceException("Falha ao Gravar novo Cadastro ", e);
 
-		}
+			}
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Cargo update(Cargo cargo) throws PersistenceException {
+	public CentroCusto update(CentroCusto centroCusto) throws PersistenceException {
 		try {
-			Cargo c = em.merge(cargo);
+			centroCusto = em.merge(centroCusto);
 	
-			return c;
+			return centroCusto;
 		} catch (Exception e) {
 
 			log.warn("Falha ao Atualizar Cadastro "+ e.getMessage());
@@ -115,19 +117,19 @@ public class CargoDAO implements BaseLocalRepository<Cargo> {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void toRemove(Long id) throws PersistenceException {
+	public void toRemove(CentroCusto centroCusto) throws PersistenceException {
 		try {
-			Cargo c = (Cargo) em.find(Cargo.class, id);
-			if (c != null) {
-				em.remove(c);
-			}
-			} catch (Exception e) {
+		CentroCusto cCusto = (CentroCusto) em.find(CentroCusto.class, centroCusto.getId());
+		if (cCusto != null) {
+			em.remove(cCusto);
+		}
+		} catch (Exception e) {
 
-				log.warn("Falha ao Excluir Cadastro "+ e.getMessage());
-				throw new PersistenceException("Falha ao Excluir Cadastro ", e);
+			log.warn("Falha ao Excluir Cadastro "+ e.getMessage());
+			throw new PersistenceException("Falha ao Excluir Cadastro ", e);
 
-			}
-		
+		}
+
 	}
 
 }

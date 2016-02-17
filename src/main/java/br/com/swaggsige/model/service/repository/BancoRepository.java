@@ -1,4 +1,4 @@
-package br.com.swaggsige.model.service.DAO;
+package br.com.swaggsige.model.service.repository;
 
 import java.util.Collection;
 
@@ -16,43 +16,35 @@ import javax.persistence.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import br.com.swaggsige.model.domain.Marca;
+import br.com.swaggsige.model.domain.Banco;
 import br.com.swaggsige.model.service.exception.PersistenceException;
-import br.com.swaggsige.model.service.repository.MarcaLocalRepository;
 
 /**
- * 
  * SwaggSigePortal
  *
  * @Author: Sérgio D. Storino Junior
  * @Email: sergio.storinojr@gmail.com
  * @WebSite: www.sergiostorino.com.br
- * @Github: github@sergiostorino.com.br 
- * TransactionManagementType.CONTAINER
- *          Anotação informa que o tipo de persistencia é por conta do container
- *          TransactionAttributeType.REQUIRED : anotação verifica se existe uma
- *          transação em andamento se existe ele utiliza caso contrario cria uma
- *          nova;
+ * @Github: github@sergiostorino.com.br
  *
- * @param <T>
  *
  */
-@Stateless(mappedName="MarcaDAO")
+@Stateless(mappedName = "BancoDAO")
 @LocalBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class MarcaDAO implements MarcaLocalRepository {
+public class BancoRepository implements BaseLocalRepository<Banco> {
 
 	@PersistenceContext(unitName = "PU")
 	private EntityManager em;
 	
-	private static Log log = LogFactory.getLog(MarcaDAO.class);
+	private static Log log = LogFactory.getLog(BancoRepository.class);
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<Marca> getAll() throws PersistenceException {
-		try {
-			Query createNamedQuery = em.createNamedQuery("marca.getAll");
+	public Collection<Banco> getAll() throws PersistenceException{
+		try{
+			Query createNamedQuery = em.createNamedQuery("banco.getAll");
 			
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
@@ -65,34 +57,31 @@ public class MarcaDAO implements MarcaLocalRepository {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Marca getById(Long id) {
-		return em.find(Marca.class, id);
-				
+	public Banco getById(Long id) throws PersistenceException{
+		return em.find(Banco.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<Marca> getAllByDescriptionStartsWith(String description) throws PersistenceException {
+	public Collection<Banco> getAllByDescriptionStartsWith(String nomeBanco) throws PersistenceException {
 		try {
-			Query createNamedQuery = em.createNamedQuery("marca.getAllByDescriptionStartsWith")
-																	.setParameter("descricao", description);
-			
+			Query createNamedQuery = em.createNamedQuery("banco.getAllByNameBankStartsWith")
+																			.setParameter("nomeBanco", nomeBanco);
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
 			
-			log.warn("Nennhum Resultado foi encontrado para Esta Descrição " + e.getMessage());
-			throw new PersistenceException("Nennhum Resultado foi encontrado para Esta Descrição ", e);
+			log.warn("Nennhum Resultado foi encontrado para Este Banco " + e.getMessage());
+			throw new PersistenceException("Nennhum Resultado foi encontrado para Este Banco ", e);
 				
 		}
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void save(Marca marca) throws PersistenceException {
+	public void save(Banco banco) throws PersistenceException {
 		try {
 			
-			em.persist(marca);
+			em.persist(banco);
 		} catch (Exception e) {
 
 			log.warn("Falha ao Gravar novo Cadastro "+ e.getMessage());
@@ -103,11 +92,11 @@ public class MarcaDAO implements MarcaLocalRepository {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Marca update(Marca marca) throws PersistenceException {
+	public Banco update(Banco banco) throws PersistenceException {
 		try {
-			Marca m = em.merge(marca);
+			Banco b = em.merge(banco);
 	
-			return m;
+			return b;
 		} catch (Exception e) {
 
 			log.warn("Falha ao Atualizar Cadastro "+ e.getMessage());
@@ -120,9 +109,9 @@ public class MarcaDAO implements MarcaLocalRepository {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void toRemove(Long id) throws PersistenceException {
 		try {
-			Marca m = (Marca) em.find(Marca.class, id);
-			if (m != null) {
-				em.remove(m);
+			Banco b = (Banco) em.find(Banco.class, id);
+			if (b != null) {
+				em.remove(b);
 			}
 			} catch (Exception e) {
 
@@ -132,5 +121,5 @@ public class MarcaDAO implements MarcaLocalRepository {
 			}
 		
 	}
-	
+
 }

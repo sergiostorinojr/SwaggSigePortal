@@ -1,4 +1,4 @@
-package br.com.swaggsige.model.service.DAO;
+package br.com.swaggsige.model.service.repository;
 
 import java.util.Collection;
 
@@ -16,36 +16,42 @@ import javax.persistence.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import br.com.swaggsige.model.domain.Banco;
+import br.com.swaggsige.model.domain.Cargo;
 import br.com.swaggsige.model.service.exception.PersistenceException;
-import br.com.swaggsige.model.service.repository.BaseLocalRepository;
 
 /**
+ * 
  * SwaggSigePortal
  *
  * @Author: Sérgio D. Storino Junior
  * @Email: sergio.storinojr@gmail.com
  * @WebSite: www.sergiostorino.com.br
- * @Github: github@sergiostorino.com.br
+ * @Github: github@sergiostorino.com.br 
+ * TransactionManagementType.CONTAINER
+ *          Anotação informa que o tipo de persistencia é por conta do container
+ *          TransactionAttributeType.REQUIRED : anotação verifica se existe uma
+ *          transação em andamento se existe ele utiliza caso contrario cria uma
+ *          nova;
  *
+ * @param <T>
  *
  */
-@Stateless(mappedName = "BancoDAO")
+@Stateless(mappedName = "CargoDAO")
 @LocalBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class BancoDAO implements BaseLocalRepository<Banco> {
+public class CargoRepository implements BaseLocalRepository<Cargo> {
 
 	@PersistenceContext(unitName = "PU")
 	private EntityManager em;
 	
-	private static Log log = LogFactory.getLog(BancoDAO.class);
+	private static Log log = LogFactory.getLog(CargoRepository.class);
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<Banco> getAll() throws PersistenceException{
+	public Collection<Cargo> getAll() throws PersistenceException {
 		try{
-			Query createNamedQuery = em.createNamedQuery("banco.getAll");
+			Query createNamedQuery = em.createNamedQuery("cargo.getAll");
 			
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
@@ -58,31 +64,31 @@ public class BancoDAO implements BaseLocalRepository<Banco> {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Banco getById(Long id) throws PersistenceException{
-		return em.find(Banco.class, id);
+	public Cargo getById(Long id) {
+		return em.find(Cargo.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<Banco> getAllByDescriptionStartsWith(String nomeBanco) throws PersistenceException {
+	public Collection<Cargo> getAllByDescriptionStartsWith(String description) throws PersistenceException {
 		try {
-			Query createNamedQuery = em.createNamedQuery("banco.getAllByNameBankStartsWith")
-																			.setParameter("nomeBanco", nomeBanco);
+			Query createNamedQuery = em.createNamedQuery("cargo.getAllByDescriptionStartsWith")
+																.setParameter("descricao", description);
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
 			
-			log.warn("Nennhum Resultado foi encontrado para Este Banco " + e.getMessage());
-			throw new PersistenceException("Nennhum Resultado foi encontrado para Este Banco ", e);
+			log.warn("Nennhum Resultado foi encontrado para Esta Descrição " + e.getMessage());
+			throw new PersistenceException("Nennhum Resultado foi encontrado para Esta Descrição ", e);
 				
 		}
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void save(Banco banco) throws PersistenceException {
+	public void save(Cargo cargo) throws PersistenceException {
 		try {
 			
-			em.persist(banco);
+			em.persist(cargo);
 		} catch (Exception e) {
 
 			log.warn("Falha ao Gravar novo Cadastro "+ e.getMessage());
@@ -93,11 +99,11 @@ public class BancoDAO implements BaseLocalRepository<Banco> {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Banco update(Banco banco) throws PersistenceException {
+	public Cargo update(Cargo cargo) throws PersistenceException {
 		try {
-			Banco b = em.merge(banco);
+			Cargo c = em.merge(cargo);
 	
-			return b;
+			return c;
 		} catch (Exception e) {
 
 			log.warn("Falha ao Atualizar Cadastro "+ e.getMessage());
@@ -110,9 +116,9 @@ public class BancoDAO implements BaseLocalRepository<Banco> {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void toRemove(Long id) throws PersistenceException {
 		try {
-			Banco b = (Banco) em.find(Banco.class, id);
-			if (b != null) {
-				em.remove(b);
+			Cargo c = (Cargo) em.find(Cargo.class, id);
+			if (c != null) {
+				em.remove(c);
 			}
 			} catch (Exception e) {
 

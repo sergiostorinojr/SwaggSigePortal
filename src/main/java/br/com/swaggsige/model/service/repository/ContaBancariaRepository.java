@@ -1,4 +1,4 @@
-package br.com.swaggsige.model.service.DAO;
+package br.com.swaggsige.model.service.repository;
 
 import java.util.Collection;
 
@@ -18,7 +18,6 @@ import org.apache.commons.logging.LogFactory;
 
 import br.com.swaggsige.model.domain.ContaBancaria;
 import br.com.swaggsige.model.service.exception.PersistenceException;
-import br.com.swaggsige.model.service.repository.ContaBancariaLocalRepository;
 
 /**
  * 
@@ -36,14 +35,14 @@ import br.com.swaggsige.model.service.repository.ContaBancariaLocalRepository;
 @Stateless(mappedName = "ContaBancariaDAO")
 @LocalBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class ContaBancariaDAO implements ContaBancariaLocalRepository {
+public class ContaBancariaRepository implements ContaBancariaLocalRepository {
 
 	@PersistenceContext(unitName = "PU")
 	private EntityManager em;
 
-	private static Log log = LogFactory.getLog(ContaBancariaDAO.class);
+	private static Log log = LogFactory.getLog(ContaBancariaRepository.class);
 	
-	public ContaBancariaDAO() {
+	public ContaBancariaRepository() {
 	}
 
 	@SuppressWarnings("unchecked")

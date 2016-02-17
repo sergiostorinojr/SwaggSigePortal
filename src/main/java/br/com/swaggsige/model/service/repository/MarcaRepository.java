@@ -1,4 +1,4 @@
-package br.com.swaggsige.model.service.DAO;
+package br.com.swaggsige.model.service.repository;
 
 import java.util.Collection;
 
@@ -16,9 +16,8 @@ import javax.persistence.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import br.com.swaggsige.model.domain.CentroCusto;
+import br.com.swaggsige.model.domain.Marca;
 import br.com.swaggsige.model.service.exception.PersistenceException;
-import br.com.swaggsige.model.service.repository.CentroCustoLocalRepository;
 
 /**
  * 
@@ -37,25 +36,22 @@ import br.com.swaggsige.model.service.repository.CentroCustoLocalRepository;
  * @param <T>
  *
  */
+@Stateless(mappedName="MarcaDAO")
 @LocalBean
-@Stateless(mappedName = "CentroCustoDAO")
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class CentroCustoDAO implements CentroCustoLocalRepository {
+public class MarcaRepository implements MarcaLocalRepository {
 
 	@PersistenceContext(unitName = "PU")
 	private EntityManager em;
 	
-	private static Log log = LogFactory.getLog(CentroCustoDAO.class);
-
-	public CentroCustoDAO() {
-	}
+	private static Log log = LogFactory.getLog(MarcaRepository.class);
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<CentroCusto> getAll() throws PersistenceException{
-		try{
-			Query createNamedQuery = em.createNamedQuery("centroCusto.getAll");
+	public Collection<Marca> getAll() throws PersistenceException {
+		try {
+			Query createNamedQuery = em.createNamedQuery("marca.getAll");
 			
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
@@ -68,46 +64,49 @@ public class CentroCustoDAO implements CentroCustoLocalRepository {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public CentroCusto getById(Long id) {
-		return em.find(CentroCusto.class, id);
+	public Marca getById(Long id) {
+		return em.find(Marca.class, id);
+				
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Collection<CentroCusto> getAllByDescriptionStartsWith(String description) throws PersistenceException{
+	public Collection<Marca> getAllByDescriptionStartsWith(String description) throws PersistenceException {
 		try {
-			Query createNamedQuery = em.createNamedQuery("centroCusto.getAllByDescriptionStartsWith")
-																			.setParameter("descricao", description);
+			Query createNamedQuery = em.createNamedQuery("marca.getAllByDescriptionStartsWith")
+																	.setParameter("descricao", description);
+			
 			return createNamedQuery.getResultList();
 		}catch(NoResultException e){
 			
-			log.warn("Nennhum Resultado foi encontrado para Este Banco " + e.getMessage());
-			throw new PersistenceException("Nennhum Resultado foi encontrado para Este Banco ", e);
+			log.warn("Nennhum Resultado foi encontrado para Esta Descrição " + e.getMessage());
+			throw new PersistenceException("Nennhum Resultado foi encontrado para Esta Descrição ", e);
 				
 		}
 	}
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void save(CentroCusto centroCusto) throws PersistenceException {
-			try {
-				
-				em.persist(centroCusto);
-			} catch (Exception e) {
+	public void save(Marca marca) throws PersistenceException {
+		try {
+			
+			em.persist(marca);
+		} catch (Exception e) {
 
-				log.warn("Falha ao Gravar novo Cadastro "+ e.getMessage());
-				throw new PersistenceException("Falha ao Gravar novo Cadastro ", e);
+			log.warn("Falha ao Gravar novo Cadastro "+ e.getMessage());
+			throw new PersistenceException("Falha ao Gravar novo Cadastro ", e);
 
-			}
+		}
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public CentroCusto update(CentroCusto centroCusto) throws PersistenceException {
+	public Marca update(Marca marca) throws PersistenceException {
 		try {
-			centroCusto = em.merge(centroCusto);
+			Marca m = em.merge(marca);
 	
-			return centroCusto;
+			return m;
 		} catch (Exception e) {
 
 			log.warn("Falha ao Atualizar Cadastro "+ e.getMessage());
@@ -118,19 +117,19 @@ public class CentroCustoDAO implements CentroCustoLocalRepository {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void toRemove(CentroCusto centroCusto) throws PersistenceException {
+	public void toRemove(Long id) throws PersistenceException {
 		try {
-		CentroCusto cCusto = (CentroCusto) em.find(CentroCusto.class, centroCusto.getId());
-		if (cCusto != null) {
-			em.remove(cCusto);
-		}
-		} catch (Exception e) {
+			Marca m = (Marca) em.find(Marca.class, id);
+			if (m != null) {
+				em.remove(m);
+			}
+			} catch (Exception e) {
 
-			log.warn("Falha ao Excluir Cadastro "+ e.getMessage());
-			throw new PersistenceException("Falha ao Excluir Cadastro ", e);
+				log.warn("Falha ao Excluir Cadastro "+ e.getMessage());
+				throw new PersistenceException("Falha ao Excluir Cadastro ", e);
 
-		}
-
+			}
+		
 	}
-
+	
 }
